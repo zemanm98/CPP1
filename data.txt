@@ -1,0 +1,14 @@
+ARENA
+500 500
+5
+100
+end_after_collision
+report_distance
+OBJECTS
+square
+5
+k1 100 100 5 5 0 90 4
+k2 0 320 4 3 10 95 6
+k3 280 400 -4 -6 20 65 7
+k4 60 320 -8 2 0 85 3
+k5 420 420 -2 -2 0 100 3
