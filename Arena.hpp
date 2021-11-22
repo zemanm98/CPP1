@@ -13,18 +13,26 @@
 
 class Arena {
 public:
+
     enum ObjectType {square, ball, rectangle};
-    Arena(std::vector<Shape*> objects, std::vector<bool> out_opt, int width, int height,
+    Arena(std::vector<std::shared_ptr<Shape>> objects, std::vector<bool> out_opt, int width, int height,
             int object_count, int step_size, int max_step, ObjectType object_type);
-private:
-    std::vector<Shape*> objects;
-    const std::vector<bool> out_opt;
-    const int width;
-    const int height;
-    const int object_count;
-    const int step_size;
-    const int max_step;
-    const ObjectType object_type;
+
+    void find_collisions();
+    bool collision(Shape* sh1, Shape* sh2);
+    void run_simulation();
+    void check_wall_hit(Shape* sh);
+    void step();
+    ~Arena() = default;
+    std::vector<std::shared_ptr<Shape>> objects;
+    std::vector<bool> out_opt;
+    int width;
+    int height;
+    int object_count;
+    int step_size;
+    int max_step;
+    ObjectType object_type;
+
 };
 
 
