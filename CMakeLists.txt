@@ -3,4 +3,4 @@ project(cpp_semestralka1)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(cpp_semestralka1 main.cpp Arena.cpp Arena.hpp Shape.hpp Square.cpp Square.hpp)
+add_executable(cpp_semestralka1 main.cpp Arena.cpp Arena.hpp Shape.hpp Square.cpp Square.hpp Circle.cpp Circle.hpp Rectangle.cpp Rectangle.hpp)

@@ -1,17 +1,17 @@
 //
-// Created by zeman on 21.10.2021.
+// Created by zeman on 24.11.2021.
 //
 
-#ifndef CPP_SEMESTRALKA1_SQUARE_HPP
-#define CPP_SEMESTRALKA1_SQUARE_HPP
+#ifndef CPP_SEMESTRALKA1_CIRCLE_HPP
+#define CPP_SEMESTRALKA1_CIRCLE_HPP
 
 #include <iostream>
 #include <string>
 #include "Shape.hpp"
 
-class Square : public Shape{
+class Circle : public Shape{
 public:
-    explicit Square(std::string nam, double x, double y, int vx, int vy, int ct, int dt, double length);
+    explicit Circle(std::string nam, int x, int y, int vx, int vy, int ct, int dt, double r);
 
     void invert_speed_x() override;
     void invert_speed_y() override;
@@ -30,19 +30,18 @@ public:
     void set_x(int val) override;
     void set_y(int val) override;
     bool collision(Shape* shp1, Shape* shp2) override;
-    ~Square() = default;
-
+    ~Circle() = default;
 private:
     std::string name;
-    double start_x;
-    double start_y;
+    int start_x;
+    int start_y;
     int speed_x;
     int speed_y;
     int creation_time;
     int deletion_time;
-    double side_length;
+    double diameter;
     bool alive;
 };
 
 
-#endif //CPP_SEMESTRALKA1_SQUARE_HPP
+#endif //CPP_SEMESTRALKA1_CIRCLE_HPP

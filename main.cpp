@@ -9,6 +9,8 @@
 #include <memory>
 #include "Arena.hpp"
 #include "Square.hpp"
+#include "Circle.hpp"
+#include "Rectangle.hpp"
 
 std::vector<std::string> parse_input(std::string &line, const std::string& delim){
     std::vector<std::string> res;
@@ -99,10 +101,16 @@ std::shared_ptr<Arena> load_file(const std::shared_ptr<std::string>& name){
                                                                    std::stoi(object[7])));
                     }
                     else if(object_type == Arena::ObjectType::ball){
-                        std::cout<< "ball neni implementovan" <<std::endl;
+                        objects.push_back(std::make_shared<Circle>(object[0], std::stoi(object[1]), std::stoi(object[2]),
+                                                                   std::stoi(object[3]), std::stoi(object[4]),
+                                                                   std::stoi(object[5]), std::stoi(object[6]),
+                                                                   std::stoi(object[7])));
                     }
                     else if(object_type == Arena::ObjectType::rectangle){
-                        std::cout << "rectangle neni implementovan" << std::endl;
+                        objects.push_back(std::make_shared<Rectangle>(object[0], std::stoi(object[1]), std::stoi(object[2]),
+                                                                   std::stoi(object[3]), std::stoi(object[4]),
+                                                                   std::stoi(object[5]), std::stoi(object[6]),
+                                                                   std::stoi(object[7]), std::stoi(object[8])));
                     }
                     else{
                         std::cout << "unknown shape type" << std::endl;

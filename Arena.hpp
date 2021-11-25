@@ -19,15 +19,16 @@ public:
             int object_count, int step_size, int max_step, ObjectType object_type);
 
     void find_collisions();
-    bool collision(Shape* sh1, Shape* sh2);
     void run_simulation();
     void check_wall_hit(Shape* sh);
     void step();
+    bool check_lifetime(Shape* sh);
     ~Arena() = default;
     std::vector<std::shared_ptr<Shape>> objects;
     std::vector<bool> out_opt;
     int width;
     int height;
+    int current_step;
     int object_count;
     int step_size;
     int max_step;

@@ -12,15 +12,31 @@ Arena::Arena(std::vector<std::shared_ptr<Shape>> objects, std::vector<bool> out_
     this->height = height;
     this->object_count = object_count;
     this->step_size = step_size;
+    this->current_step = 0;
     this->max_step = max_step;
     this->object_type = object_type;
 }
 
 void Arena::step() {
+    std::cout<<"step: " << this->current_step << std::endl;
     for(int i = 0; i < this->objects.size(); i++){
-        ++*(this->objects[i].get());
-        check_wall_hit(this->objects[i].get());
-        std::cout << "obj: " << i << " x: " << this->objects[i]->get_x() << " y: " << this->objects[i]->get_y() << std::endl;
+        check_lifetime(this->objects[i].get());
+        if(this->objects[i]->get_creation_time() == this->current_step){
+            this->objects[i]->set_alive(true);
+        }
+        if(this->objects[i]->get_alive()) {
+            ++*(this->objects[i].get());
+            this->objects[i]->wall_hit(this->height, this->width);
+            std::cout << "obj: " << this->objects[i]->get_name() << " x: " << this->objects[i]->get_x() << " y: " << this->objects[i]->get_y()
+                      << std::endl;
+        }
+    }
+    this->current_step++;
+}
+
+bool Arena::check_lifetime(Shape* sh){
+    if(sh->get_deletion_time() == this->current_step){
+        sh->set_alive(false);
     }
 }
 
@@ -76,26 +92,14 @@ void Arena::run_simulation(){
 
 void Arena::find_collisions(){
     for(int i = 0; i < this->objects.size(); i++){
-        for(int a = i; a < this->objects.size(); a++){
-            if(a != i){
-                if(this->collision(this->objects[i].get(), this->objects[a].get())){
-                    /*
-                    if(out_opt[0]){
-                        exit(0);
+        if(this->objects[i]->get_alive()) {
+            for (int a = i; a < this->objects.size(); a++) {
+                if (a != i && this->objects[a]->get_alive()) {
+                    if (this->objects[i]->collision(this->objects[i].get(), this->objects[a].get())) {
+                        std::cout << "kolize: " << i << " a " << a << std::endl;
                     }
-                    */
-                    std::cout << "kolize: " << i << " a " << a << std::endl;
                 }
             }
         }
     }
-}
-
-bool Arena::collision(Shape* sh1, Shape* sh2){
-    double len1 = ((double)*sh1->get_params()/2);
-    double len2 = ((double)*sh2->get_params()/2);
-    if(abs((sh1->get_x() - sh2->get_x())) <= (len1 + len2) && abs((sh1->get_y() - sh2->get_y())) <= (len1 + len2)){
-        return true;
-    }
-    return false;
 }
