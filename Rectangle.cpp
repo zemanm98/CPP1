@@ -96,5 +96,46 @@ std::string Rectangle::get_name() {
 }
 
 void Rectangle::wall_hit(int height, int width) {
- //TODO
+    double addx = ((double)this->base1 / 2);
+    double addy = ((double)this->base2 / 2);
+    if((this->start_x + addx) > width && (this->start_y + addy) < height && (this->start_y - addy) > 0){
+        this->start_x = (width - ((this->start_x + addx) - width));
+        this->speed_x = -1 * this->speed_x;
+    }
+    else if((this->start_x - addx) < 0 && (this->start_y + addy) < height && (this->start_y - addy) > 0){
+        this->start_x = (0 + (-1 * (this->start_x - addx)));
+        this->speed_x = -1 * this->speed_x;
+    }
+    else if((this->start_y + addy) > height && (this->start_x + addx) < width && (this->start_x - addx) > 0){
+        this->start_y = (height - ((this->start_y + addy) - height));
+        this->speed_y = -1 * this->speed_y;
+    }
+    else if((this->start_y - addy) < 0 && (this->start_x + addx) < width && (this->start_x - addx) > 0){
+        this->start_y = (0 + (-1 * (this->start_y - addy)));
+        this->speed_y = -1 * this->speed_y;
+    }
+    else if((this->start_x + addx) > width && (this->start_y + addy) > height){
+        this->start_x = (width - ((this->start_x + addx) - width));
+        this->speed_x = -1 * this->speed_x;
+        this->start_y = (height - ((this->start_y + addy) - height));
+        this->speed_y = -1 * this->speed_y;
+    }
+    else if((this->start_x + addx) > width && (this->start_y - addy) < 0){
+        this->start_x = (width - ((this->start_x + addx) - width));
+        this->speed_x = -1 * this->speed_x;
+        this->start_y = (0 + (-1 * (this->start_y - addy)));
+        this->speed_y = -1 * this->speed_y;
+    }
+    else if((this->start_x - addx) < 0 && (this->start_y - addy) < 0){
+        this->start_x = (0 + (-1 * (this->start_x - addx)));
+        this->speed_x = -1 * this->speed_x;
+        this->start_y = (0 + (-1 * (this->start_y - addy)));
+        this->speed_y = -1 * this->speed_y;
+    }
+    else if((this->start_x - addx) < 0 && (this->start_y + addy) > height){
+        this->start_x = (0 + (-1 * (this->start_x - addx)));
+        this->speed_x = -1 * this->speed_x;
+        this->start_y = (height - ((this->start_y + addy) - height));
+        this->speed_y = -1 * this->speed_y;
+    }
 }

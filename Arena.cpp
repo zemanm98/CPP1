@@ -5,7 +5,7 @@
 #include "Arena.hpp"
 
 Arena::Arena(std::vector<std::shared_ptr<Shape>> objects, std::vector<bool> out_opt, int width, int height, int object_count,
-             int step_size, int max_step, Arena::ObjectType object_type) {
+             int step_size, int max_step, Arena::ObjectType object_type, std::string out) {
     this->objects = objects;
     this->out_opt = out_opt;
     this->width = width;
@@ -15,15 +15,14 @@ Arena::Arena(std::vector<std::shared_ptr<Shape>> objects, std::vector<bool> out_
     this->current_step = 0;
     this->max_step = max_step;
     this->object_type = object_type;
+    this->outoption = out;
 }
 
 void Arena::step() {
     std::cout<<"step: " << this->current_step << std::endl;
     for(int i = 0; i < this->objects.size(); i++){
         check_lifetime(this->objects[i].get());
-        if(this->objects[i]->get_creation_time() == this->current_step){
-            this->objects[i]->set_alive(true);
-        }
+        check_creation(this->objects[i].get());
         if(this->objects[i]->get_alive()) {
             ++*(this->objects[i].get());
             this->objects[i]->wall_hit(this->height, this->width);
@@ -40,46 +39,9 @@ bool Arena::check_lifetime(Shape* sh){
     }
 }
 
-void Arena::check_wall_hit(Shape* sh){
-    if(sh->get_x() >= this->width && sh->get_y() < this->height && sh->get_y() > 0){
-        sh->set_x(this->width - (sh->get_x() % this->width));
-        sh->invert_speed_x();
-    }
-    else if(sh->get_x() <= 0 && sh->get_y() < this->height && sh->get_y() > 0){
-        sh->set_x(0 + (-1 * sh->get_x()));
-        sh->invert_speed_x();
-    }
-    else if(sh->get_y() >= this->height && sh->get_x() < this->width && sh->get_x() > 0){
-        sh->set_y(this->height - (sh->get_y() % this->height));
-        sh->invert_speed_y();
-    }
-    else if(sh->get_y() <= 0 && sh->get_x() < this->width && sh->get_x() > 0){
-        sh->set_y(0 + (-1 * sh->get_y()));
-        sh->invert_speed_y();
-    }
-    else if(sh->get_x() >= this->width && sh->get_y() >= this->height){
-        sh->set_x(this->width - (sh->get_x() % this->width));
-        sh->invert_speed_x();
-        sh->set_y(this->height - (sh->get_y() % this->height));
-        sh->invert_speed_y();
-    }
-    else if(sh->get_x() >= this->width && sh->get_y() <= 0){
-        sh->set_x(this->width - (sh->get_x() % this->width));
-        sh->invert_speed_x();
-        sh->set_y(0 + (-1 * sh->get_y()));
-        sh->invert_speed_y();
-    }
-    else if(sh->get_x() <= 0 && sh->get_y() <= 0){
-        sh->set_x(0 + (-1 * sh->get_x()));
-        sh->invert_speed_x();
-        sh->set_y(0 + (-1 * sh->get_y()));
-        sh->invert_speed_y();
-    }
-    else if(sh->get_x() <= 0 && sh->get_y() >= this->height){
-        sh->set_x(0 + (-1 * sh->get_x()));
-        sh->invert_speed_x();
-        sh->set_y(this->height - (sh->get_y() % this->height));
-        sh->invert_speed_y();
+bool Arena::check_creation(Shape* sh){
+    if(sh->get_creation_time() == this->current_step){
+        sh->set_alive(true);
     }
 }
 

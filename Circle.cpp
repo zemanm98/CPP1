@@ -88,5 +88,45 @@ std::string Circle::get_name() {
 }
 
 void Circle::wall_hit(int height, int width) {
- //TODO
+    double add = ((double)this->diameter / 2);
+    if((this->start_x + add) > width && (this->start_y + add) < height && (this->start_y - add) > 0){
+        this->start_x = (width - ((this->start_x + add) - width));
+        this->speed_x = -1 * this->speed_x;
+    }
+    else if((this->start_x - add) < 0 && (this->start_y + add) < height && (this->start_y - add) > 0){
+        this->start_x = (0 + (-1 * (this->start_x - add)));
+        this->speed_x = -1 * this->speed_x;
+    }
+    else if((this->start_y + add) > height && (this->start_x + add) < width && (this->start_x - add) > 0){
+        this->start_y = (height - ((this->start_y + add) - height));
+        this->speed_y = -1 * this->speed_y;
+    }
+    else if((this->start_y - add) < 0 && (this->start_x + add) < width && (this->start_x - add) > 0){
+        this->start_y = (0 + (-1 * (this->start_y - add)));
+        this->speed_y = -1 * this->speed_y;
+    }
+    else if((this->start_x + add) > width && (this->start_y + add) > height){
+        this->start_x = (width - ((this->start_x + add) - width));
+        this->speed_x = -1 * this->speed_x;
+        this->start_y = (height - ((this->start_y + add) - height));
+        this->speed_y = -1 * this->speed_y;
+    }
+    else if((this->start_x + add) > width && (this->start_y - add) < 0){
+        this->start_x = (width - ((this->start_x + add) - width));
+        this->speed_x = -1 * this->speed_x;
+        this->start_y = (0 + (-1 * (this->start_y - add)));
+        this->speed_y = -1 * this->speed_y;
+    }
+    else if((this->start_x - add) < 0 && (this->start_y - add) < 0){
+        this->start_x = (0 + (-1 * (this->start_x - add)));
+        this->speed_x = -1 * this->speed_x;
+        this->start_y = (0 + (-1 * (this->start_y - add)));
+        this->speed_y = -1 * this->speed_y;
+    }
+    else if((this->start_x - add) < 0 && (this->start_y + add) > height){
+        this->start_x = (0 + (-1 * (this->start_x - add)));
+        this->speed_x = -1 * this->speed_x;
+        this->start_y = (height - ((this->start_y + add) - height));
+        this->speed_y = -1 * this->speed_y;
+    }
 }

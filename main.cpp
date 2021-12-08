@@ -2,7 +2,6 @@
 // Created by zeman on 21.10.2021.
 //
 #include <iostream>
-
 #include <string>
 #include <fstream>
 #include <vector>
@@ -26,8 +25,9 @@ std::vector<std::string> parse_input(std::string &line, const std::string& delim
 }
 
 
-std::shared_ptr<Arena> load_file(const std::shared_ptr<std::string>& name){
+std::shared_ptr<Arena> load_file(const std::shared_ptr<std::string>& name, const std::shared_ptr<std::string>& outopt){
     std::string names = *name;
+    std::string outoption = *outopt;
     std::ifstream fin;
     fin.open(names, std::ios::in);
     if(!fin.is_open()){
@@ -129,9 +129,9 @@ std::shared_ptr<Arena> load_file(const std::shared_ptr<std::string>& name){
 
 
 int main(int argc, char** argv){
-    std::shared_ptr<std::string> data_file_name = std::make_unique<std::string>(argv[1]);
-    std::unique_ptr<std::string> output_option = std::make_unique<std::string>(argv[2]);
-    std::shared_ptr<Arena> arena = load_file(data_file_name);
+    std::shared_ptr<std::string> data_file_name = std::make_shared<std::string>(argv[1]);
+    std::shared_ptr<std::string> output_option = std::make_shared<std::string>(argv[2]);
+    std::shared_ptr<Arena> arena = load_file(data_file_name, output_option);
     arena->run_simulation();
     return 0;
 }

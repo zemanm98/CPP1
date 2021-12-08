@@ -16,16 +16,17 @@ public:
 
     enum ObjectType {square, ball, rectangle};
     Arena(std::vector<std::shared_ptr<Shape>> objects, std::vector<bool> out_opt, int width, int height,
-            int object_count, int step_size, int max_step, ObjectType object_type);
+            int object_count, int step_size, int max_step, ObjectType object_type, std::string out);
 
     void find_collisions();
     void run_simulation();
-    void check_wall_hit(Shape* sh);
     void step();
     bool check_lifetime(Shape* sh);
+    bool check_creation(Shape* sh);
     ~Arena() = default;
     std::vector<std::shared_ptr<Shape>> objects;
     std::vector<bool> out_opt;
+    std::string outoption;
     int width;
     int height;
     int current_step;

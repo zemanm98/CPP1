@@ -32,8 +32,8 @@ public:
     ~Rectangle() = default;
 private:
     std::string name;
-    int start_x;
-    int start_y;
+    double start_x;
+    double start_y;
     int speed_x;
     int speed_y;
     int creation_time;
